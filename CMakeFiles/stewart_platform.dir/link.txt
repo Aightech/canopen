@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/stewart_platform.dir/src/canopen_socket.cpp.o CMakeFiles/stewart_platform.dir/src/main.cpp.o  -o stewart_platform  -L/home/aightech/Documents/Profesional/Isir/Service_Technique/canopen/lib -Wl,-rpath,/home/aightech/Documents/Profesional/Isir/Service_Technique/canopen/lib -lutil -lboost_iostreams -lboost_system -lboost_filesystem -lpthread 

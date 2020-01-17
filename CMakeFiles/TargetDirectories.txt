@@ -1,3 +1,0 @@
-/home/aightech/Documents/Profesional/Isir/Service_Technique/canopen/CMakeFiles/rebuild_cache.dir
-/home/aightech/Documents/Profesional/Isir/Service_Technique/canopen/CMakeFiles/canopen.dir
-/home/aightech/Documents/Profesional/Isir/Service_Technique/canopen/CMakeFiles/edit_cache.dir
