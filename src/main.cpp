@@ -27,8 +27,21 @@ main(int argc, char** argv)
   uint16_t index = (uint16_t)strtol(argv[1],NULL,16);
   uint8_t  subindex = (uint8_t)strtol(argv[2],NULL,16);
 
-  can.send_SDO(1, FRAME_SIZE, SDO_R, index, subindex);
-
+  if(argc==3)
+    can.send_SDO(4, FRAME_SIZE, SDO_R, index, subindex);
+  if(argc==6)
+    {
+      uint8_t s = (uint8_t)strtol(argv[3],NULL,10);
+      uint8_t b = (argv[4][0]=='d')?10:16;
+      printf("%d\n",s);
+      if(s==1)
+	can.send_SDO(4, SDO_W, index, subindex,(uint8_t)strtol(argv[5],NULL,b));
+      if(s==2)
+	can.send_SDO(4, SDO_W, index, subindex,(uint16_t)strtol(argv[5],NULL,b));
+      if(s==4)
+	can.send_SDO(4, SDO_W, index, subindex,(uint32_t)strtol(argv[5],NULL,b));
+    }
+    
   
 
 	
