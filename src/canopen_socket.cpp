@@ -10,11 +10,9 @@ Canopen_socket::Canopen_socket(const char* ifname, bool verbose) : m_verbose(ver
   if((m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
     perror("Error while opening socket");
     
-
-  
+  //get the interface ID  
   strcpy(m_ifr.ifr_name, ifname);
   ioctl(m_socket, SIOCGIFINDEX, &m_ifr);
-	
   m_addr.can_family  = AF_CAN;
   m_addr.can_ifindex = m_ifr.ifr_ifindex;
 
