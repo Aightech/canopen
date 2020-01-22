@@ -28,7 +28,7 @@ main(int argc, char** argv)
   uint8_t  subindex = (uint8_t)strtol(argv[2],NULL,16);
 
   if(argc==3)
-    can.send_SDO(4, FRAME_SIZE, SDO_R, index, subindex);
+    can.send_SDO(4, SDO_R, index, subindex);
   if(argc==6)
     {
       uint8_t s = (uint8_t)strtol(argv[3],NULL,10);
