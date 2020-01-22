@@ -1,5 +1,8 @@
+#configure_file(config.h.in "${CMAKE_CURRENT_BINARY_DIR}/config.h" @ONLY)
+
 cmake_minimum_required(VERSION 3.0)
 set(EXEC_NAME canopen)
+set(LIB_NAME ${EXEC_NAME}.0)
 project(${EXEC_NAME})
 
 #get the sources and headers
@@ -10,12 +13,15 @@ file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" "include/*.hpp")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
+
+ADD_LIBRARY(${LIB_NAME} STATIC ${SRCS})
+
 #create our exec file
 add_executable(${EXEC_NAME} ${SRCS} ${HEADERS})
 
 #link LSL libraries
 if(UNIX)
-  target_link_libraries (${EXEC_NAME} -lutil -lboost_iostreams -lboost_system -lboost_filesystem -lpthread )
+  target_link_libraries (${EXEC_NAME} ${LIB_NAME} )
   ADD_CUSTOM_COMMAND (	TARGET ${EXEC_NAME} POST_BUILD
 						#copy the dll files 
 						COMMENT "Saving exec in bin/ directory..." VERBATIM
