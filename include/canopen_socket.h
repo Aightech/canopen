@@ -43,6 +43,8 @@
 #define NMT_RESET_NODE 0x0082
 #define NMT_RESET_COMM 0x0081
 
+static uint64_t AVAL = 1;
+
 
 
 
@@ -149,18 +151,7 @@ class Canopen_socket
 
 
 
-  
-  /*!
-   *  \brief templated function to send PDO1 message with different kind of data type (uint8_t, uint16_t ...)
-   *  \param N : Number of the PDO.
-   *  \param T : Data type.
-   *  \param nodeID : ID of the destination node. [0-127] 
-   *  \param data1 : The data to write, can be any data type. (uint8_t, uint16_t ...)
-   */
-  template <uint8_t N, typename T> void send_PDO(uint8_t nodeID, T data1)
-  {
-    send_PDO(N,nodeID,data1);
-  };
+
     /*!
    *  \brief templated function to send PDO1 message with different kind of data type (uint8_t, uint16_t ...)
    *  \param N : Number of the PDO.
@@ -168,27 +159,14 @@ class Canopen_socket
    *  \param nodeID : ID of the destination node. [0-127] 
    *  \param data1 : The data to write, can be any data type. (uint8_t, uint16_t ...)
    */
-  template <uint8_t N, typename T, typename S> void send_PDO(uint8_t nodeID, T data1, S data2)
+  template <uint8_t N, typename T, typename S=uint64_t>
+    void
+    send_PDO(uint8_t nodeID, T data1, S data2=0)
   {
     send_PDO(N,nodeID,data1,data2);
   };
 
 
-
-  
-  /*!
-   *  \brief templated function to send PDO message with different kind of data type (uint8_t, uint16_t ...)
-   *  \param T : Data type.
-   *  \param pdo_n : Number of the PDO to send 
-   *  \param nodeID : ID of the destination node. [0-127] 
-   *  \param data1 : The data to write, can be any data type. (uint8_t, uint16_t ...)
-   */
-  template <typename T>
-    void
-    send_PDO( uint8_t pdo_n, uint8_t nodeID, T data1)
-  {
-    send_msg(0x100*pdo_n+0x100+nodeID,data1);
-  };
   /*!
    *  \brief templated function to send PDO message with different kind of data type (uint8_t, uint16_t ...)
    *  \param T : Data type.
@@ -198,9 +176,9 @@ class Canopen_socket
    *  \param data1 : The data to write, can be any data type. (uint8_t, uint16_t ...)
    *  \param data2 : The data to write, can be any data type. (uint8_t, uint16_t ...)
    */
-  template <typename T, typename S>
+  template <typename T, typename S=uint64_t>
     void
-    send_PDO( uint8_t pdo_n, uint8_t nodeID, T data1, S data2)
+    send_PDO( uint8_t pdo_n, uint8_t nodeID, T data1, S data2=0)
   {
     send_msg(0x100*pdo_n+0x100+nodeID,data1,data2);
   };
@@ -217,21 +195,6 @@ class Canopen_socket
 
 
 
-
-
-  /*!
-   *  \brief templated function to send CAN message.
-   *  \param T : Data type.
-   *  \param nodeID : COBID of the messae to send 
-   *  \param data1 : The data to write, can be any data type. (uint8_t, uint16_t ...)
-   */
-  template <typename T>
-    void
-    send_msg(uint32_t COB_ID, T data1)
-    {
-      send_msg(COB_ID, data1, 0, 1);
-    };
-
   /*!
    *  \brief templated function to send CAN message.
    *  \param T : Data type.
@@ -240,14 +203,14 @@ class Canopen_socket
    *  \param data1 : The data to write, can be any data type. (uint8_t, uint16_t ...)
    *  \param data2 : The data to write, can be any data type. (uint8_t, uint16_t ...)
    */
-  template <typename T, typename S=uint8_t>
+  template <typename T, typename S=uint64_t>
     void
-    send_msg(uint32_t COB_ID, T data1, S data2, uint8_t nb_data=2)
+    send_msg(uint32_t COB_ID, T data1, S data2=0)
     {
       m_frame.can_id  = COB_ID;
     
       long unsigned sT = sizeof(T);//data size
-      long unsigned sS = (nb_data==2)?sizeof(S):0;//data size 
+      long unsigned sS = (sizeof(S)>4)?0:sizeof(S);//data size 
       m_frame.can_dlc = sT+sS;
       memset( m_frame.data , 0, sT+sS );
     
@@ -260,7 +223,34 @@ class Canopen_socket
       write(m_socket, &m_frame, sizeof(struct can_frame));
     };
 
-  
+
+
+
+  /*!
+   *  \brief templated function to read message with different kind of data type (uint8_t, uint16_t ...)
+   *  \param T : Data type.
+   *  \param S : Data type.
+   *  \param data1 : The data to read, can be any data type. (uint8_t, uint16_t ...)
+   *  \param data2 : The data to read, can be any data type. (uint8_t, uint16_t ...)
+   */
+  template <typename T, typename S=uint64_t>
+    uint32_t recv(T& data1, S& data2=AVAL)
+  {
+      //recv frame
+      int n = read(m_socket, &m_frame, sizeof(struct can_frame));
+      if(m_verbose)
+	{
+	  if(n<0)
+	    printf("CAN socket: nothing to read\n");
+	  else if (n < sizeof(struct can_frame))
+	    fprintf(stderr, "read: incomplete CAN frame\n");
+	}
+      data1 = *(T*)m_frame.data;
+      if(sizeof(S)<5)
+	data2 = *(S*)(m_frame.data+sizeof(T));
+
+      return m_frame.can_id;
+  };
 
   /*!
    *  \brief Function  to print SDO message.
