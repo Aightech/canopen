@@ -51,6 +51,7 @@ class Canopen_socket
     for(i =0; i<sd; i++)
       m_frame.data[4+i] = data>>(8*i);
 
+    
     if(m_verbose)
       print_frame(m_frame);
     
