@@ -3,6 +3,7 @@
 
 Canopen_socket::Canopen_socket(const char* ifname, bool verbose) : m_verbose(verbose)
 {
+
   //Get the can network interface.
   strcpy(m_ifname, ifname);
 
@@ -21,6 +22,8 @@ Canopen_socket::Canopen_socket(const char* ifname, bool verbose) : m_verbose(ver
 
   if(bind(m_socket, (struct sockaddr *)&m_addr, sizeof(m_addr)) < 0) 
     perror("Error in socket bind");
+
+  
   
 }
 
