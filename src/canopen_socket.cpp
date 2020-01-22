@@ -38,14 +38,19 @@ Canopen_socket::print_frame(struct can_frame frame)
       for(int i = 0 ; i < 8; i++)
 	printf(" %02X",frame.data[i]);
 
-      int sd = 4-((frame.data[0]&0x0f)>>2);
-      printf(" ) \t %s\tIndex:0x%04X\tSubindex:0x%02X\tData:%d (0x%04X)\n",
-	     ((frame.data[0]&0xf0)==0x40)?"READ":"WRITE",
-      	     *(uint16_t*)(frame.data+1),
-      	     *(uint8_t*)(frame.data+3),
-      	     (sd==1)?*(uint8_t*)(frame.data+4):(sd==2)?*(uint16_t*)(frame.data+4):*(uint32_t*)(frame.data+4),
-	     (sd==1)?*(uint8_t*)(frame.data+4):(sd==2)?*(uint16_t*)(frame.data+4):*(uint32_t*)(frame.data+4)
-      	     );
+      if(frame.data[4]==0x80)
+	printf(" ) \t ERROR\n");
+      else
+	{
+	  int sd = 4-((frame.data[0]&0x0f)>>2);
+	  printf(" ) \t %s\tIndex:0x%04X\tSubindex:0x%02X\tData:%d (0x%04X)\n",
+		 ((frame.data[0]&0xf0)==0x40)?"READ":"WRITE",
+		 *(uint16_t*)(frame.data+1),
+		 *(uint8_t*)(frame.data+3),
+		 (sd==1)?*(uint8_t*)(frame.data+4):(sd==2)?*(uint16_t*)(frame.data+4):*(uint32_t*)(frame.data+4),
+		 (sd==1)?*(uint8_t*)(frame.data+4):(sd==2)?*(uint16_t*)(frame.data+4):*(uint32_t*)(frame.data+4)
+		 );
+	}
     }
 }
 
