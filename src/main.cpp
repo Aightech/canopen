@@ -14,7 +14,12 @@
 
 #include "canopen_socket.h"
 
-
+void usage(char** argv)
+{
+  printf("usage: %s 0xindex 0xsubindex [ datasize base data ]\n",argv[0]);
+  printf("\tex: \n\t\tTo read register 0x1000:2 > %s 1000 2\n",argv[0]);
+  printf("\t\t To write in register 0x2000:F value 0x1234 > %s 2000 F 2 x 1234\n",argv[0]);
+}
 
 int
 main(int argc, char** argv)
@@ -29,7 +34,7 @@ main(int argc, char** argv)
 
   if(argc==3)
     can.send_SDO(4, SDO_R, index, subindex);
-  if(argc==6)
+  else if(argc==6)
     {
       uint8_t s = (uint8_t)strtol(argv[3],NULL,10);
       uint8_t b = (argv[4][0]=='d')?10:16;
@@ -41,6 +46,8 @@ main(int argc, char** argv)
       if(s==4)
 	can.send_SDO(4, SDO_W, index, subindex,(uint32_t)strtol(argv[5],NULL,b));
     }
+  else
+    usage(argv);
     
   
 

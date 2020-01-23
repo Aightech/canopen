@@ -71,9 +71,13 @@ class Canopen_socket
  Canopen_socket(const char* ifname, uint32_t COBID, bool verbose = false) :
   Canopen_socket(ifname, verbose)
       {
-	m_rfilter[0].can_id=COBID;
+	m_rfilter[0].can_id= COBID;
 	m_rfilter[0].can_mask = CAN_SFF_MASK;
 	setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &m_rfilter, sizeof(m_rfilter));
+
+	
+	//printf("ID: %x\n",m_rfilter[0].can_id);
+	//printf("mask: %x\n",m_rfilter[0].can_mask);
       };
 
 
@@ -121,9 +125,12 @@ class Canopen_socket
 
       //send frame
       write(m_socket, &m_frame, sizeof(struct can_frame));
-
+      
       //recv frame
       int n = read(m_socket, &m_frame, sizeof(struct can_frame));
+      while(*(uint16_t*)(m_frame.data+1) != index || m_frame.data[3] != subindex)
+	  n = read(m_socket, &m_frame, sizeof(struct can_frame));
+
       if(m_verbose)
 	{
 	  if(n<0)
@@ -238,6 +245,7 @@ class Canopen_socket
   {
       //recv frame
       int n = read(m_socket, &m_frame, sizeof(struct can_frame));
+      printf("CAN socket: nothing to read  %x\n",*(uint16_t*)m_frame.data);
       if(m_verbose)
 	{
 	  if(n<0)
@@ -266,7 +274,7 @@ class Canopen_socket
   int m_socket; /*!< Can socket */
   char m_ifname[20];  /*!< CAN interface name*/
 
-  struct can_filter m_rfilter[0];
+  struct can_filter m_rfilter[1];
   
   struct sockaddr_can m_addr;  /*!< CAN address*/
   struct can_frame m_frame;  /*!< CAN frame*/
