@@ -81,7 +81,6 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 endif()
 
 
-
 #create executable
 add_executable(${EXEC_NAME} ${SRCS})
 target_link_libraries (${EXEC_NAME}
