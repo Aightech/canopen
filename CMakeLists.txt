@@ -67,7 +67,6 @@ list(REMOVE_ITEM LIB_HEADERS ${EXTRA_HEADERS})
 ###### include helper functions ######
 include(CMakeFunctions.txt)
 
-
 ###### Search for Subdirectories/Libraries ######
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib") 
   subdirlist(LIBS "${CMAKE_CURRENT_SOURCE_DIR}/lib/")
@@ -82,9 +81,6 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib")
     list(APPEND EXTRA_LIBS "${subdir}.${subdir_version}")
   endforeach()
 endif()
-
-
-
 
 ###### Create the library ######
 add_library(${LIB_NAME} ${LIB_SRCS})
