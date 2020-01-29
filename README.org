@@ -4,6 +4,7 @@
 *** Name
 Canopen_socket
 *** brief
+Canopen object able to send command through a CAN interface using the UNIX socket.
 *** Methods
 |  PDO  | SDO | NMT |
 |---|---|---|
