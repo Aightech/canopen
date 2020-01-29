@@ -24,9 +24,25 @@ git clone https://gitlab-dev.isir.upmc.fr/devillard/canopen.git && cd canpen
 ```bash
 mkdir build && cd build && cmake .. && cmake --build .
 ```
-*** Methods
-|  PDO  | SDO | NMT |
-|---|---|---|
-| `set_PDO<N,R/W>(ID)` | `send_SDO(ID,index,sub,data)` | `send_NMT(mode)` | 
-| `send_PDO<N>(ID,data)` | | |
-| `recv(&data)` |  | |
+### Methods
+#### PDO 
+```cpp
+void set_PDO<N,R/W>(uint8_t ID); // Set the R/W PDO numero N.
+```
+```cpp
+void send_PDO<N>(uint8_t ID, T data); // Send the data of type T (anytype) with the PDO N.
+```
+```cpp
+void recv(T& data); // Receive the data of type T (anytype).
+```
+
+
+#### SDO
+```cpp
+void send_SDO(uint8_t ID, uint16_t index, uint8_t sub, T data); // Send the data of type T (anytype) with a SDO message at index:sub.
+```
+#### NMT
+```cpp
+void send_NMT(uint16_t msg); // Send a NMT message.
+```
+
