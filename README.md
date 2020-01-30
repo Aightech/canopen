@@ -28,6 +28,22 @@ mkdir build && cd build && cmake .. && cmake --build .
 
 ## Canopen program
 The executable file canopen enable you to send SDO message to a CAN bus.
+### usage: 
+	./canopen ifname 0xindex 0xsub [ size base data ]
+
+	Arg:	ifname  : CAN interface name
+		0xindex : Object register index
+		0xsub   : Object register subindex
+		size : Data size (number of bytes)
+		base : Numerical base of the value passed.
+		data : Value to write.
+
+	Ex:	To read register 0x1000:2 of node 4 on "can0": 
+		./canopen can0 4 1000 2
+
+		To write in register 0x2000:F of node 3 the value 0x1234 on "can0": 
+		./canopen can0 3 2000 F 2 x 1234
+
 
 ## Library Methods
 #### PDO 
@@ -40,7 +56,6 @@ void send_PDO<N>(uint8_t ID, T data); // Send the data of type T (anytype) with 
 ```cpp
 void recv(T& data); // Receive the data of type T (anytype).
 ```
-
 
 #### SDO
 ```cpp
