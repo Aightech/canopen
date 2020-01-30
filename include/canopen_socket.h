@@ -21,22 +21,15 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
-#define FRAME_SIZE 8
-#define SDO_W 1
-#define SDO_R 0
+//SDO message read or write macro.
+#define SDO_R 0x00
+#define SDO_W 0x01
 
-#define R_PDO 0x00
-#define T_PDO 0x01
+//PDO message read or transmit macro.
+#define PDO_R 0x00
+#define PDO_T 0x01
 
-#define PDO_1 0x01
-#define PDO_2 0x02
-#define PDO_3 0x03
-#define PDO_4 0x04
-
-#define SDO_COBID 0x600
-#define SDO_FRAME_SIZE 8
-
-
+//Network management message macro.
 #define NMT_START 0x0001
 #define NMT_STOP  0x0002
 #define NMT_PREOP 0x0080
@@ -70,15 +63,15 @@ class Canopen_socket
    */
  Canopen_socket(const char* ifname, uint32_t COBID, bool verbose = false) :
   Canopen_socket(ifname, verbose)
-      {
-	m_rfilter[0].can_id= COBID;
-	m_rfilter[0].can_mask = CAN_SFF_MASK;
-	setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &m_rfilter, sizeof(m_rfilter));
+    {
+      m_rfilter[0].can_id= COBID;
+      m_rfilter[0].can_mask = CAN_SFF_MASK;
+      setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &m_rfilter, sizeof(m_rfilter));
 
 	
-	//printf("ID: %x\n",m_rfilter[0].can_id);
-	//printf("mask: %x\n",m_rfilter[0].can_mask);
-      };
+      //printf("ID: %x\n",m_rfilter[0].can_id);
+      //printf("mask: %x\n",m_rfilter[0].can_mask);
+    };
 
 
   /*!
@@ -107,9 +100,9 @@ class Canopen_socket
     uint32_t
     send_SDO(uint8_t nodeID, bool w, uint16_t index, uint8_t subindex, T data=0)
     {
-      m_frame.can_id  = SDO_COBID+nodeID;
-      m_frame.can_dlc = SDO_FRAME_SIZE;
-      memset( m_frame.data , 0, SDO_FRAME_SIZE);
+      m_frame.can_id  = 0x600+nodeID;
+      m_frame.can_dlc = 8;
+      memset( m_frame.data , 0, 8);
 
       //filled up the frame
       long unsigned i,sd = sizeof(T);//data size 
@@ -129,7 +122,7 @@ class Canopen_socket
       //recv frame
       int n = read(m_socket, &m_frame, sizeof(struct can_frame));
       while(*(uint16_t*)(m_frame.data+1) != index || m_frame.data[3] != subindex)
-	  n = read(m_socket, &m_frame, sizeof(struct can_frame));
+	n = read(m_socket, &m_frame, sizeof(struct can_frame));
 
       if(m_verbose)
 	{
@@ -145,21 +138,45 @@ class Canopen_socket
     };
 
 
-  template <uint8_t N, uint8_t U=R_PDO>
-  void
+  
+  /*!
+   *  \brief templated function to set (activate) PDO1 message.
+   *  \param N : Numero of the PDO.
+   *  \param U : Transmit or read PDO.
+   *  \param nodeID : ID of the destination node. [0-127] 
+   */
+  template <uint8_t N, uint8_t U=PDO_R>
+    void
     set_PDO(uint8_t nodeID)
-  {
-    if(U==R_PDO)
-      send_SDO(nodeID , SDO_W, 0x1400+N-1, 1, 0x04000100+N*0x100+nodeID);
-    else
-      send_SDO(nodeID , SDO_W, 0x1800+N-1, 1, 0x04000080+N*0x100+nodeID);
+    {
+      if(U==PDO_R)
+	send_SDO(nodeID , SDO_W, 0x1400+N-1, 1, 0x04000100+N*0x100+nodeID);
+      else
+	send_SDO(nodeID , SDO_W, 0x1800+N-1, 1, 0x04000080+N*0x100+nodeID);
     
-  };
+    };
+  
+  /*!
+   *  \brief templated function to unset (desactivate) PDO1 message.
+   *  \param N : Numero of the PDO.
+   *  \param U : Transmit or read PDO.
+   *  \param nodeID : ID of the destination node. [0-127] 
+   */
+  template <uint8_t N, uint8_t U=PDO_R>
+    void
+    unset_PDO(uint8_t nodeID)
+    {
+      if(U==PDO_R)
+	send_SDO(nodeID , SDO_W, 0x1400+N-1, 1, 0x84000100+N*0x100+nodeID);
+      else
+	send_SDO(nodeID , SDO_W, 0x1800+N-1, 1, 0x84000080+N*0x100+nodeID);
+    
+    };
+  
 
 
 
-
-    /*!
+  /*!
    *  \brief templated function to send PDO1 message with different kind of data type (uint8_t, uint16_t ...)
    *  \param N : Number of the PDO.
    *  \param T : Data type.
@@ -169,9 +186,9 @@ class Canopen_socket
   template <uint8_t N, typename T, typename S=uint64_t>
     void
     send_PDO(uint8_t nodeID, T data1, S data2=0)
-  {
-    send_PDO(N,nodeID,data1,data2);
-  };
+    {
+      send_PDO(N,nodeID,data1,data2);
+    };
 
 
   /*!
@@ -186,12 +203,12 @@ class Canopen_socket
   template <typename T, typename S=uint64_t>
     void
     send_PDO( uint8_t pdo_n, uint8_t nodeID, T data1, S data2=0)
-  {
-    send_msg(0x100*pdo_n+0x100+nodeID,data1,data2);
-  };
+    {
+      send_msg(0x100*pdo_n+0x100+nodeID,data1,data2);
+    };
 
 
-   /*!
+  /*!
    *  \brief templated function to send NMT CAN message.
    *  \param msg : NMT message to send. 
    */
@@ -242,7 +259,7 @@ class Canopen_socket
    */
   template <typename T, typename S=uint64_t>
     uint32_t recv(T& data1, S& data2=AVAL)
-  {
+    {
       //recv frame
       int n = read(m_socket, &m_frame, sizeof(struct can_frame));
       printf("CAN socket: nothing to read  %x\n",*(uint16_t*)m_frame.data);
@@ -258,7 +275,7 @@ class Canopen_socket
 	data2 = *(S*)(m_frame.data+sizeof(T));
 
       return m_frame.can_id;
-  };
+    };
 
   /*!
    *  \brief Function  to print SDO message.
