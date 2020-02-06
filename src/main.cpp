@@ -52,11 +52,20 @@ main(int argc, char** argv)
 	  uint8_t b = (argv[i++][0]=='d')?10:16;//base of the value writen
 	  char * v = argv[i++];
 	  if(s==1)//
-	    can.send_SDO(node, SDO_W, index, subindex,(uint8_t)strtol(v,NULL,b));
+	    {
+	      int8_t data = (uint32_t)strtol(v,NULL,b);
+	      can.send_SDO(node, SDO_W, index, subindex,data);
+	    }
 	  if(s==2)
-	    can.send_SDO(node, SDO_W, index, subindex,(uint16_t)strtol(v,NULL,b));
+	    {
+	      int16_t data = (uint32_t)strtol(v,NULL,b);
+	      can.send_SDO(node, SDO_W, index, subindex,data);
+	    }
 	  if(s==4)
-	    can.send_SDO(node, SDO_W, index, subindex,(uint32_t)strtol(v,NULL,b));
+	    {
+	      int32_t data = (uint32_t)strtol(v,NULL,b);
+	      can.send_SDO(node, SDO_W, index, subindex,data);
+	    }
 	}
     }
   else

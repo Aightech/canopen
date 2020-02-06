@@ -93,7 +93,7 @@ class Canopen_socket
      *  \param data : The data to write, can be any data type. (uint8_t, uint16_t ...)
      *  \return Return number of bytes written.
      */
-    template <typename T = uint8_t>
+    template <typename T=uint64_t>
     int32_t
     send_SDO(uint8_t nodeID, bool w, uint32_t index, T& data = AVAL)
     {
@@ -110,7 +110,7 @@ class Canopen_socket
      *  \param data : The data to write, can be any data type. (uint8_t, uint16_t ...)
      *  \return Return number of bytes written.
      */
-    template <typename T = uint8_t>
+    template <typename T=uint64_t>
     int32_t
     send_SDO(
         uint8_t nodeID, bool w, uint16_t index, uint8_t subindex, T& data = AVAL)
@@ -125,7 +125,7 @@ class Canopen_socket
         m_frame.data[1] = index;
         m_frame.data[2] = index >> 8;
         m_frame.data[3] = subindex;
-	if(&data != &AVAL)
+	if(sizeof(data)<5)
 	  for(i = 0; i < sd; i++) m_frame.data[4 + i] = data >> (8 * i);
 
         if(m_verbose)
