@@ -14,13 +14,13 @@ Canopen_socket::Canopen_socket(const char *ifname, bool verbose)
     // get the interface ID
     strcpy(m_ifr.ifr_name, ifname);
     if(ioctl(m_socket, SIOCGIFINDEX, &m_ifr) < 0)
-      {
-        m_ifavailable = false;
-	printf("The can interface: %s is not available.\n", m_ifname);
-
-      }
-	else
     {
+        m_ifavailable = false;
+        printf("The can interface: %s is not available.\n", m_ifname);
+    }
+    else
+    {
+        m_ifavailable = true;
         m_addr.can_family = AF_CAN;
         m_addr.can_ifindex = m_ifr.ifr_ifindex;
 

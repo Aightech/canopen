@@ -71,6 +71,11 @@ class Canopen_socket
         setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &m_rfilter,
                    sizeof(m_rfilter));
 
+	// LINUX
+	struct timeval tv;
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
         //printf("ID: %x\n",m_rfilter[0].can_id);
         //printf("mask: %x\n",m_rfilter[0].can_mask);
     };
