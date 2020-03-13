@@ -39,7 +39,7 @@ public:
         }
 
         value = 0;
-        for (auto it = begin(); it < begin() + sizeof(T); ++it) {
+        for (auto it = begin() + sizeof(T) - 1; it >= begin(); --it) {
             value |= *it;
             value <<= 8;
         }
