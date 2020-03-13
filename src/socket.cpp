@@ -73,10 +73,10 @@ std::shared_ptr<Message> Socket::receive()
 
     if (n < 0) {
         IF_VERBOSE(1, std::cout << "CANopen::Socket::receive: nothing to read" << std::endl)
-        return std::make_shared<Message>();
+        return std::shared_ptr<Message>();
     } else if (n < static_cast<ssize_t>(sizeof(struct can_frame))) {
         IF_VERBOSE(1, std::cerr << "CANopen::Socket::receive: incomplete CAN frame" << std::endl)
-        return std::make_shared<Message>();
+        return std::shared_ptr<Message>();
     }
 
     std::shared_ptr<Message> ret;
