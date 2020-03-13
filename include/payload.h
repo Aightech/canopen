@@ -2,10 +2,10 @@
 #define _CANOPEN_PAYLOAD_H_
 
 #include <cstdint>
-#include <vector>
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
+#include <vector>
 
 namespace CANopen {
 class Payload : public std::vector<uint8_t> {
