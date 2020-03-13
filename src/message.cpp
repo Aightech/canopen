@@ -6,8 +6,8 @@ namespace CANopen {
 Message::Message(uint32_t cob_id, Payload payload)
 {
     can_id = cob_id;
-    can_dlc = CAN_MAX_DLC;
-    memcpy(data, payload.data(), payload.size());
+    can_dlc = payload.size();
+    memcpy(data, payload.data(), can_dlc);
 }
 
 Message::Message(const can_frame& other)
@@ -27,7 +27,7 @@ uint8_t Message::node_id()
 
 Payload Message::payload()
 {
-    return std::vector<uint8_t>(data, data + CAN_MAX_DLC);
+    return std::vector<uint8_t>(data, data + can_dlc);
 }
 
 std::string Message::to_string()
