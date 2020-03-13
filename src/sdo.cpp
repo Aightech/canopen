@@ -15,6 +15,7 @@ SDOMessage::SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, ui
     }
 
     can_id = fn + node_id;
+    can_dlc = CAN_MAX_DLC;
     data[0] = static_cast<uint8_t>(spec << 5 | n << 2 | e << 1 | s);
     data[1] = static_cast<uint8_t>(index);
     data[2] = static_cast<uint8_t>(index >> 8);
