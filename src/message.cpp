@@ -33,7 +33,7 @@ Payload Message::payload()
 std::string Message::to_string()
 {
     std::stringstream ss;
-    ss << std::hex << "0x" << function_code() << " | 0x" << node_id() << " | " << payload();
+    ss << std::hex << "0x" << function_code() << " | 0x" << (int)node_id() << " | " << payload();
     return ss.str();
 }
 }
