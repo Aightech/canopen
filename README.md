@@ -26,6 +26,24 @@ git clone https://gitlab-dev.isir.upmc.fr/devillard/canopen.git && cd canpen
 mkdir build && cd build && cmake .. && cmake --build .
 ```
 
+#### Testing
+##### Install can tools
+```bash
+sudo apt install can-utilis
+```
+
+##### Setup a virtual CAN bus
+```bash
+sudo ip link add dev vcan0 type vcan && ip link set up vcan0
+```
+
+##### Listen to the CAN bus
+```bash
+candump vcan0
+```
+
+
+
 ## Canopen program
 The executable file canopen enable you to send SDO message to a CAN bus.
 ### usage: 
@@ -45,24 +63,4 @@ The executable file canopen enable you to send SDO message to a CAN bus.
 		./canopen can0 3 2000 F 2 x 1234
 
 
-## Library Methods
-#### PDO 
-```cpp
-void set_PDO<N,M>(uint8_t ID); // Set the R/W PDO numero N. M: SDO_W / SDO_R
-```
-```cpp
-void send_PDO<N>(uint8_t ID, T data); // Send the data of type T (anytype) with the PDO N.
-```
-```cpp
-void recv(T& data); // Receive the data of type T (anytype).
-```
-
-#### SDO
-```cpp
-void send_SDO(uint8_t ID, uint16_t index, uint8_t sub, T data); // Send the data of type T (anytype) with a SDO message at index:sub.
-```
-#### NMT
-```cpp
-void send_NMT(uint16_t msg); // Send a NMT message. NMT_START / NMT_STOP / NMT_PREOP / NMT_RESET_NODE / NMT_RESET_COMM
-```
 
