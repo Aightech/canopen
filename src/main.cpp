@@ -1,4 +1,5 @@
 #include "socket.h"
+#include <iostream>
 
 void usage(char** argv)
 {
@@ -32,21 +33,44 @@ int main(int argc, char** argv)
             uint8_t s = (uint8_t)strtol(argv[i++], NULL, 10); //size of the data to send
             uint8_t b = (argv[i++][0] == 'd') ? 10 : 16; //base of the value writen
             char* v = argv[i++];
+	    
+	    CANopen::Payload p;
             if (s == 1) {
                 int8_t data = (uint32_t)strtol(v, NULL, b);
-                can.send(CANopen::SDOOutboundWrite(node, index, subindex, CANopen::Payload::from_data(data)));
-            }
+		p << data;
+	    }	    
             if (s == 2) {
                 int16_t data = (uint32_t)strtol(v, NULL, b);
-                can.send(CANopen::SDOOutboundWrite(node, index, subindex, CANopen::Payload::from_data(data)));
-            }
-            if (s == 4) {
+		p << data;
+	    }
+	    if (s == 4) {
+	      
                 int32_t data = (uint32_t)strtol(v, NULL, b);
-                can.send(CANopen::SDOOutboundWrite(node, index, subindex, CANopen::Payload::from_data(data)));
+		p << data;
             }
-        }
+
+	    
+
+	    
+	    //Use the methode value to acces the value of the payload
+	    /*p.value<uint16_t>(2) = 0x6789;
+	    std::cout << "The second block of 2byte is equale to (uint16_t):  " << std::hex << p.value<uint16_t>(2) << std::endl;
+	    */
+
+	    CANopen::SDOOutboundWrite msg = CANopen::SDOOutboundWrite(node, index, subindex, p);
+
+	    
+	    std::cout  << "payload sent: " << p << std::endl;
+	    std::cout  << "Message  sent: " << msg.to_string() << std::endl;
+	    
+	    can.send(std::move(msg));
+	    
+	      
+	      
+            
+	      }
     } else
-        usage(argv);
+      usage(argv);
 
     return 0;
 }
