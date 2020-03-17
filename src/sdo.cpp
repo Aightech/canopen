@@ -10,8 +10,8 @@ SDOMessage::SDOMessage(const can_frame& other)
 
 SDOMessage::SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, uint8_t e, uint8_t s, uint16_t index, uint8_t subindex, Payload payload)
 {
-    if (fn != SDOReceive | fn != SDOTransmit) {
-        throw std::runtime_error("SDOMessage: wrong function code(" + std::to_string(fn) + ")");
+    if (fn != SDOReceive && fn != SDOTransmit) {
+      throw std::runtime_error("SDOMessage: wrong function code(" + (static_cast<std::stringstream const&>(std::stringstream() << "0x" << std::hex << fn)).str() + ")");
     }
 
     can_id = fn + node_id;
@@ -20,6 +20,7 @@ SDOMessage::SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, ui
     data[1] = static_cast<uint8_t>(index);
     data[2] = static_cast<uint8_t>(index >> 8);
     data[3] = subindex;
+
     for (unsigned int i = 0; i < payload.size(); ++i) {
         data[4 + i] = payload[i];
     }
