@@ -32,18 +32,16 @@ public:
     }
 
     template <typename T>
-    Payload& operator>>(T& value)
-    {
-        if (sizeof(T) > size()) {
-            throw std::runtime_error("Data type is bigger than payload");
-        }
+    T& value(unsigned begin=0)
+  {
+    return *(T*)(data()+begin);
+  }
 
-        value = 0;
-        for (auto it = begin() + sizeof(T) - 1; it >= begin(); --it) {
-            value |= *it;
-            value <<= 8;
-        }
-        erase(begin(), begin() + sizeof(T));
+    template <typename T>
+    Payload& operator<<(T& value)
+    {
+      for(int i =0; i<sizeof(T);i++)
+	push_back(*((uint8_t*)(&value)+i));
         return *this;
     }
 
