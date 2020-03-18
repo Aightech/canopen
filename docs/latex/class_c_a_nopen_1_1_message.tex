@@ -1,0 +1,72 @@
+\hypertarget{class_c_a_nopen_1_1_message}{}\section{C\+A\+Nopen\+:\+:Message Class Reference}
+\label{class_c_a_nopen_1_1_message}\index{C\+A\+Nopen\+::\+Message@{C\+A\+Nopen\+::\+Message}}
+
+
+Inheritance diagram for C\+A\+Nopen\+:\+:Message\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_a_nopen_1_1_message__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for C\+A\+Nopen\+:\+:Message\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{class_c_a_nopen_1_1_message__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}\label{class_c_a_nopen_1_1_message_a0f8f95e4ea1284011cd122629edc5468}} 
+enum {\bfseries Function\+Code} \+: uint32\+\_\+t \{ \newline
+{\bfseries N\+MT} = 0, 
+{\bfseries Emergency} = 0x80, 
+{\bfseries Sync} = 0x80, 
+{\bfseries Time\+Stamp} = 0x100, 
+\newline
+{\bfseries P\+D\+O1\+Transmit} = 0x180, 
+{\bfseries P\+D\+O1\+Receive} = 0x200, 
+{\bfseries P\+D\+O2\+Transmit} = 0x280, 
+{\bfseries P\+D\+O2\+Receive} = 0x300, 
+\newline
+{\bfseries P\+D\+O3\+Transmit} = 0x380, 
+{\bfseries P\+D\+O3\+Receive} = 0x400, 
+{\bfseries P\+D\+O4\+Transmit} = 0x480, 
+{\bfseries P\+D\+O4\+Receive} = 0x500, 
+\newline
+{\bfseries S\+D\+O\+Transmit} = 0x580, 
+{\bfseries S\+D\+O\+Receive} = 0x600, 
+{\bfseries Heartbeat} = 0x700
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a77a8c09ad0711fa4b574a8b88d983441}\label{class_c_a_nopen_1_1_message_a77a8c09ad0711fa4b574a8b88d983441}} 
+{\bfseries Message} (const can\+\_\+frame \&other)
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_ace3b5218ab769fb1e642b82b2d3fc7d3}\label{class_c_a_nopen_1_1_message_ace3b5218ab769fb1e642b82b2d3fc7d3}} 
+{\bfseries Message} (uint32\+\_\+t cob\+\_\+id, \hyperlink{class_c_a_nopen_1_1_payload}{Payload} payload)
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a83d9901bbd77dcca9b44d68fd1e604b8}\label{class_c_a_nopen_1_1_message_a83d9901bbd77dcca9b44d68fd1e604b8}} 
+Function\+Code {\bfseries function\+\_\+code} ()
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a845fe0c7682bd6eeef0a5dd87b5e3c63}\label{class_c_a_nopen_1_1_message_a845fe0c7682bd6eeef0a5dd87b5e3c63}} 
+uint8\+\_\+t {\bfseries node\+\_\+id} ()
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a65be4f77771803bed521cbbf2316271b}\label{class_c_a_nopen_1_1_message_a65be4f77771803bed521cbbf2316271b}} 
+\hyperlink{class_c_a_nopen_1_1_payload}{Payload} {\bfseries payload} ()
+\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_message_a0d3aade9268f612f1918d64e8c6057b7}\label{class_c_a_nopen_1_1_message_a0d3aade9268f612f1918d64e8c6057b7}} 
+std\+::string {\bfseries to\+\_\+string} ()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/include/message.\+h\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/src/message.\+cpp\end{DoxyCompactItemize}

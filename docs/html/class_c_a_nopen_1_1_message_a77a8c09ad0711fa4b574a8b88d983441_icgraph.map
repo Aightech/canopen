@@ -1,0 +1,6 @@
+<map id="CANopen::Message::Message" name="CANopen::Message::Message">
+<area shape="rect" id="node2" href="$class_c_a_nopen_1_1_n_m_t_message.html#ae691342a23d0bffa2a98861099c19fcc" title="CANopen::NMTMessage\l::NMTMessage" alt="" coords="255,5,424,47"/>
+<area shape="rect" id="node3" href="$class_c_a_nopen_1_1_p_d_o_message.html#a461a62c471761504043dfcb13f9ec685" title="CANopen::PDOMessage\l::PDOMessage" alt="" coords="255,71,424,112"/>
+<area shape="rect" id="node4" href="$class_c_a_nopen_1_1_s_d_o_message.html#a73ab5aad06fd6a6f53fb614f4d9a8465" title="CANopen::SDOMessage\l::SDOMessage" alt="" coords="255,136,424,177"/>
+<area shape="rect" id="node5" href="$class_c_a_nopen_1_1_s_d_o_inbound.html#a9ec2a9d10554f7f47aeaa5d83e048f70" title="CANopen::SDOInbound\l::SDOInbound" alt="" coords="472,136,635,177"/>
+</map>

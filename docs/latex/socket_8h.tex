@@ -1,0 +1,55 @@
+\hypertarget{socket_8h}{}\section{/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/include/socket.h File Reference}
+\label{socket_8h}\index{/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/include/socket.\+h@{/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/include/socket.\+h}}
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}message.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}payload.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sdo.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pdo.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}nmt.\+h\char`\"{}}\newline
+Include dependency graph for socket.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{socket_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{socket_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_c_a_nopen_1_1_socket}{C\+A\+Nopen\+::\+Socket}
+\begin{DoxyCompactList}\small\item\em Canopen object able to send command through a C\+AN interface using U\+N\+IX sockets. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_c_a_nopen}{C\+A\+Nopen}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{socket_8h_a86e649743184cb6251a418049d8988f2}{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}(lvl,  cmd)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{socket_8h_a86e649743184cb6251a418049d8988f2}\label{socket_8h_a86e649743184cb6251a418049d8988f2}} 
+\index{socket.\+h@{socket.\+h}!I\+F\+\_\+\+V\+E\+R\+B\+O\+SE@{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}}
+\index{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE@{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}!socket.\+h@{socket.\+h}}
+\subsubsection{\texorpdfstring{I\+F\+\_\+\+V\+E\+R\+B\+O\+SE}{IF\_VERBOSE}}
+{\footnotesize\ttfamily \#define I\+F\+\_\+\+V\+E\+R\+B\+O\+SE(\begin{DoxyParamCaption}\item[{}]{lvl,  }\item[{}]{cmd }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{if} (m\_verbose\_level >= lvl) \{ \(\backslash\)
+        cmd;                      \(\backslash\)
+    \}
+\end{DoxyCode}

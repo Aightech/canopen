@@ -1,0 +1,173 @@
+\hypertarget{class_c_a_nopen_1_1_socket}{}\section{C\+A\+Nopen\+:\+:Socket Class Reference}
+\label{class_c_a_nopen_1_1_socket}\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+
+
+Canopen object able to send command through a C\+AN interface using U\+N\+IX sockets.  
+
+
+
+
+{\ttfamily \#include $<$socket.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_a_nopen_1_1_socket_a66c37f6819a5ad8829326380812446e6}{Socket} (std\+::string ifname, int verbose\+\_\+level=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_c_a_nopen_1_1_socket_af234eea5568f8f436cb815ab70e75f2f}{Socket} (std\+::string ifname, uint32\+\_\+t cob\+\_\+id, int verbose\+\_\+level=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_a6f63808addc451747608c21b958821f4}\label{class_c_a_nopen_1_1_socket_a6f63808addc451747608c21b958821f4}} 
+int \hyperlink{class_c_a_nopen_1_1_socket_a6f63808addc451747608c21b958821f4}{bind} ()
+\begin{DoxyCompactList}\small\item\em return true if the can interface is successfully bound \end{DoxyCompactList}\item 
+void \hyperlink{class_c_a_nopen_1_1_socket_aa147801723e58f287d06b6df28837c44}{send} (const \hyperlink{class_c_a_nopen_1_1_message}{Message} \&\&msg)
+\begin{DoxyCompactList}\small\item\em Function to send a C\+AN message. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_a15363c054b276777b4290c91fd05edd5}\label{class_c_a_nopen_1_1_socket_a15363c054b276777b4290c91fd05edd5}} 
+std\+::shared\+\_\+ptr$<$ \hyperlink{class_c_a_nopen_1_1_message}{Message} $>$ {\bfseries receive} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_c_a_nopen_1_1_socket_a39635df87fb1755fb9c2ce3d7ad6b6e3}{m\+\_\+socket}
+\item 
+std\+::string \hyperlink{class_c_a_nopen_1_1_socket_ae4954058b8e521b52a26065924cbea2b}{m\+\_\+ifname}
+\item 
+int \hyperlink{class_c_a_nopen_1_1_socket_a4911481144bf02f1dacfa74563ed8eab}{m\+\_\+verbose\+\_\+level}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Canopen object able to send command through a C\+AN interface using U\+N\+IX sockets. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_a66c37f6819a5ad8829326380812446e6}\label{class_c_a_nopen_1_1_socket_a66c37f6819a5ad8829326380812446e6}} 
+\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}!Socket@{Socket}}
+\index{Socket@{Socket}!C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+\subsubsection{\texorpdfstring{Socket()}{Socket()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+Socket\+::\+Socket (\begin{DoxyParamCaption}\item[{std\+::string}]{ifname,  }\item[{int}]{verbose\+\_\+level = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ifname} & \+: Name of the can interface ex\+:\char`\"{}can0\char`\"{} \\
+\hline
+{\em verbose} & \+: Display the different message sent. \\
+\hline
+\end{DoxyParams}
+
+
+References bind(), m\+\_\+ifname, m\+\_\+socket, and m\+\_\+verbose\+\_\+level.
+
+
+
+Referenced by Socket().
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_a_nopen_1_1_socket_a66c37f6819a5ad8829326380812446e6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_a_nopen_1_1_socket_a66c37f6819a5ad8829326380812446e6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_af234eea5568f8f436cb815ab70e75f2f}\label{class_c_a_nopen_1_1_socket_af234eea5568f8f436cb815ab70e75f2f}} 
+\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}!Socket@{Socket}}
+\index{Socket@{Socket}!C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+\subsubsection{\texorpdfstring{Socket()}{Socket()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily C\+A\+Nopen\+::\+Socket\+::\+Socket (\begin{DoxyParamCaption}\item[{std\+::string}]{ifname,  }\item[{uint32\+\_\+t}]{cob\+\_\+id,  }\item[{int}]{verbose\+\_\+level = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ifname} & \+: Name of the can interface ex\+:\char`\"{}can0\char`\"{} \\
+\hline
+{\em cob\+\_\+id} & \+: Filtering only frame with this ID. \\
+\hline
+{\em verbose} & \+: Display the different message sent. \\
+\hline
+\end{DoxyParams}
+
+
+References m\+\_\+socket, and Socket().
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_a_nopen_1_1_socket_af234eea5568f8f436cb815ab70e75f2f_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_aa147801723e58f287d06b6df28837c44}\label{class_c_a_nopen_1_1_socket_aa147801723e58f287d06b6df28837c44}} 
+\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}!send@{send}}
+\index{send@{send}!C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+\subsubsection{\texorpdfstring{send()}{send()}}
+{\footnotesize\ttfamily void C\+A\+Nopen\+::\+Socket\+::send (\begin{DoxyParamCaption}\item[{const \hyperlink{class_c_a_nopen_1_1_message}{Message} \&\&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Function to send a C\+AN message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & \+: C\+AN frame to send \\
+\hline
+\end{DoxyParams}
+
+
+References m\+\_\+socket.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_ae4954058b8e521b52a26065924cbea2b}\label{class_c_a_nopen_1_1_socket_ae4954058b8e521b52a26065924cbea2b}} 
+\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}!m\+\_\+ifname@{m\+\_\+ifname}}
+\index{m\+\_\+ifname@{m\+\_\+ifname}!C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+\subsubsection{\texorpdfstring{m\+\_\+ifname}{m\_ifname}}
+{\footnotesize\ttfamily std\+::string C\+A\+Nopen\+::\+Socket\+::m\+\_\+ifname\hspace{0.3cm}{\ttfamily [private]}}
+
+C\+AN interface name 
+
+Referenced by bind(), and Socket().
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_a39635df87fb1755fb9c2ce3d7ad6b6e3}\label{class_c_a_nopen_1_1_socket_a39635df87fb1755fb9c2ce3d7ad6b6e3}} 
+\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}!m\+\_\+socket@{m\+\_\+socket}}
+\index{m\+\_\+socket@{m\+\_\+socket}!C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+\subsubsection{\texorpdfstring{m\+\_\+socket}{m\_socket}}
+{\footnotesize\ttfamily int C\+A\+Nopen\+::\+Socket\+::m\+\_\+socket\hspace{0.3cm}{\ttfamily [private]}}
+
+Can socket 
+
+Referenced by bind(), send(), and Socket().
+
+\mbox{\Hypertarget{class_c_a_nopen_1_1_socket_a4911481144bf02f1dacfa74563ed8eab}\label{class_c_a_nopen_1_1_socket_a4911481144bf02f1dacfa74563ed8eab}} 
+\index{C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}!m\+\_\+verbose\+\_\+level@{m\+\_\+verbose\+\_\+level}}
+\index{m\+\_\+verbose\+\_\+level@{m\+\_\+verbose\+\_\+level}!C\+A\+Nopen\+::\+Socket@{C\+A\+Nopen\+::\+Socket}}
+\subsubsection{\texorpdfstring{m\+\_\+verbose\+\_\+level}{m\_verbose\_level}}
+{\footnotesize\ttfamily int C\+A\+Nopen\+::\+Socket\+::m\+\_\+verbose\+\_\+level\hspace{0.3cm}{\ttfamily [private]}}
+
+Verbose mode 
+
+Referenced by Socket().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/include/socket.\+h\item 
+/home/adev/\+Documents/\+S\+T\+E\+C\+H/test\+\_\+merge/canopen/src/socket.\+cpp\end{DoxyCompactItemize}

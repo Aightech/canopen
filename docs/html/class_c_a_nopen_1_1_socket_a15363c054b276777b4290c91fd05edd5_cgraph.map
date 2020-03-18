@@ -1,0 +1,4 @@
+<map id="CANopen::Socket::receive" name="CANopen::Socket::receive">
+<area shape="rect" id="node2" href="$class_c_a_nopen_1_1_message.html#a83d9901bbd77dcca9b44d68fd1e604b8" title="CANopen::Message::function_code" alt="" coords="232,5,461,32"/>
+<area shape="rect" id="node3" href="$class_c_a_nopen_1_1_message.html#a845fe0c7682bd6eeef0a5dd87b5e3c63" title="CANopen::Message::node_id" alt="" coords="250,56,443,83"/>
+</map>
