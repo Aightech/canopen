@@ -1,4 +1,4 @@
-#include "socket.h"
+#include "CANopen_socket.h"
 #include <iostream>
 
 void usage(char** argv)

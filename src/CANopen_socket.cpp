@@ -1,4 +1,4 @@
-#include "socket.h"
+#include "CANopen_socket.h"
 #include <iostream>
 #include <linux/can/raw.h>
 #include <net/if.h>
