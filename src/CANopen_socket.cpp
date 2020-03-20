@@ -12,26 +12,23 @@
 
 namespace CANopen {
 Socket::Socket(std::string ifname, int verbose_level)
-    : m_ifname(ifname)
-    , m_verbose_level(verbose_level)
-{
-    if ((m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
+    : m_ifname(ifname), m_verbose_level(verbose_level) {
+    if((m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
         throw std::runtime_error(std::string("Error while opening socket: ") + strerror(errno));
 
     int r = 0;
-    if ((r = bind()) < 0) {
+    if((r = bind()) < 0) {
         throw std::runtime_error(std::string("Failed to bind socket: ") + strerror(-r));
     }
 
     struct timeval tv;
     tv.tv_sec = 1;
     tv.tv_usec = 0;
-    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
 }
 
 Socket::Socket(std::string ifname, uint32_t cob_id, int verbose_level)
-    : Socket(ifname, verbose_level)
-{
+    : Socket(ifname, verbose_level) {
     struct can_filter rfilter[1];
 
     rfilter[0].can_id = cob_id;
@@ -39,11 +36,11 @@ Socket::Socket(std::string ifname, uint32_t cob_id, int verbose_level)
     setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 };
 
-int Socket::bind()
-{
+int
+Socket::bind() {
     struct ifreq ifr;
     strcpy(ifr.ifr_name, m_ifname.c_str());
-    if (ioctl(m_socket, SIOCGIFINDEX, &ifr) < 0) {
+    if(ioctl(m_socket, SIOCGIFINDEX, &ifr) < 0) {
         return -errno;
     } else {
         struct sockaddr_can addr;
@@ -52,41 +49,41 @@ int Socket::bind()
 
         IF_VERBOSE(1, std::cout << m_ifname << " at index " << ifr.ifr_ifindex << std::endl)
 
-        if (::bind(m_socket, (struct sockaddr*)&addr, sizeof(addr)) < 0)
+        if(::bind(m_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
             return -errno;
     }
     return 0;
 }
 
-void Socket::send(const Message&& msg)
-{
+void
+Socket::send(const Message &&msg) {
     int32_t n = write(m_socket, &msg, sizeof(struct can_frame));
-    if (n < static_cast<ssize_t>(sizeof(struct can_frame))) {
+    if(n < static_cast<ssize_t>(sizeof(struct can_frame))) {
         throw std::runtime_error("Failed to send message (n=" + std::to_string(n) + ")");
     }
 }
 
-std::shared_ptr<Message> Socket::receive()
-{
+std::shared_ptr<Message>
+Socket::receive() {
     Message ans;
     int32_t n = read(m_socket, &ans, sizeof(struct can_frame));
 
-    if (n < 0) {
+    if(n < 0) {
         IF_VERBOSE(1, std::cout << "CANopen::Socket::receive: nothing to read" << std::endl)
         return std::shared_ptr<Message>();
-    } else if (n < static_cast<ssize_t>(sizeof(struct can_frame))) {
+    } else if(n < static_cast<ssize_t>(sizeof(struct can_frame))) {
         IF_VERBOSE(1, std::cerr << "CANopen::Socket::receive: incomplete CAN frame" << std::endl)
         return std::shared_ptr<Message>();
     }
 
     std::shared_ptr<Message> ret;
-    switch (ans.function_code()) {
+    switch(ans.function_code()) {
     case Message::NMT:
         ret = std::make_shared<NMTMessage>(ans);
         break;
     case Message::Emergency:
-        if (ans.node_id() == 0) { // Sync frame
-        } else { // Emergency frame
+        if(ans.node_id() == 0) { // Sync frame
+        } else {                 // Emergency frame
             ret = std::make_shared<Message>(ans);
         }
         break;
@@ -115,4 +112,4 @@ std::shared_ptr<Message> Socket::receive()
 
     return ret;
 }
-}
+} // namespace CANopen
