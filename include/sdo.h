@@ -41,11 +41,13 @@ public:
 class SDOOutboundRead : public SDOOutbound {
 public:
     SDOOutboundRead(uint8_t node_id, uint16_t index, uint8_t subindex);
+    SDOOutboundRead(uint8_t node_id, uint32_t index__sub);
 };
 
 class SDOOutboundWrite : public SDOOutbound {
 public:
-    SDOOutboundWrite(uint8_t node_id, uint16_t index, uint8_t subindex, Payload payload);
+  SDOOutboundWrite(uint8_t node_id, uint16_t index, uint8_t subindex, Payload payload);
+  SDOOutboundWrite(uint8_t node_id, uint32_t index__sub, Payload payload);
 };
 }
 
