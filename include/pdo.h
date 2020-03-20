@@ -2,10 +2,11 @@
 #define _CANOPEN_PDO_MESSAGE_H_
 
 #include "message.h"
+#include "sdo.h"
 
 namespace CANopen {
 class PDOMessage : public Message {
-public:
+    public:
     enum PDOFunctionCode : uint32_t {
         PDO1Transmit = Message::PDO1Transmit,
         PDO1Receive = Message::PDO1Receive,
@@ -18,9 +19,12 @@ public:
     };
 
     PDOMessage() = default;
-    PDOMessage(const can_frame& other);
+    PDOMessage(const can_frame &other);
     PDOMessage(PDOFunctionCode fn, uint8_t node_id, Payload payload);
+
+    SDOOutboundWrite
+    static set(uint8_t node_id, PDOFunctionCode fn);
 };
-}
+} // namespace CANopen
 
 #endif // _CANOPEN_PDO_MESSAGE_H_
