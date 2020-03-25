@@ -22,8 +22,6 @@ class PDOMessage : public Message {
     PDOMessage(const can_frame &other);
     PDOMessage(PDOFunctionCode fn, uint8_t node_id, Payload payload);
 
-    SDOOutboundWrite
-    static set(uint8_t node_id, PDOFunctionCode fn);
 };
 } // namespace CANopen
 

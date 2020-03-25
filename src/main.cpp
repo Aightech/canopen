@@ -62,7 +62,7 @@ main(int argc, char **argv) {
 	      CANopen::SDOOutboundWrite msg2 = CANopen::PDOMessage::set(3, CANopen::PDOMessage::PDO2Transmit);
                 */
 
-            CANopen::SDOOutboundWrite msg = CANopen::PDOMessage::set(3, CANopen::PDOMessage::PDO2Receive);
+            CANopen::SDOOutboundWrite msg = CANopen::SDOOutboundWrite(node, index, subindex, p);
 
             std::cout << "payload sent: " << p << std::endl;
             std::cout << "Message  sent: " << msg.to_string() << std::endl;
