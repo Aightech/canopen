@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+
 namespace CANopen {
 class Payload : public std::vector<uint8_t> {
     public:
@@ -42,6 +43,8 @@ class Payload : public std::vector<uint8_t> {
     template <typename T>
     T &
     value(unsigned begin = 0) {
+        if(empty())
+            throw std::runtime_error(std::string("Empty payload."));
         return *(T *)(data() + begin);
     }
 
