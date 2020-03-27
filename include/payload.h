@@ -47,7 +47,7 @@ class Payload : public std::vector<uint8_t> {
 
     template <typename T>
     Payload &
-    operator<<(T &value) {
+    operator<<(T &&value) {
         for(int i = 0; i < sizeof(T); i++)
             push_back(*((uint8_t *)(&value) + i));
         return *this;

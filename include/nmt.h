@@ -4,10 +4,9 @@
 #include "message.h"
 
 namespace CANopen {
-class NMTMessage : public Message
-{
-public:
-    enum Code : uint8_t{
+class NMTMessage : public Message {
+    public:
+    enum Code : uint8_t {
         Initialising = 0,
         GoToOperational = 0x01,
         GoToStopped = 0x02,
@@ -20,9 +19,9 @@ public:
     };
 
     NMTMessage() = default;
-    NMTMessage(const can_frame& other);
+    NMTMessage(const can_frame &other);
     NMTMessage(Code code, uint8_t node_id);
 };
-}
+} // namespace CANopen
 
 #endif // _CANOPEN_NMT_MESSAGE_H_
