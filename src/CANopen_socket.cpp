@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdarg.h>
 
 namespace CANopen {
 Socket::Socket(std::string ifname, int verbose_level)
@@ -33,6 +34,21 @@ Socket::Socket(std::string ifname, uint32_t cob_id, int verbose_level)
 
     rfilter[0].can_id = cob_id;
     rfilter[0].can_mask = CAN_SFF_MASK;
+    setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
+};
+
+void
+Socket::add_filter(unsigned nb_filter...) {
+    struct can_filter rfilter[nb_filter];
+    va_list ap;
+    va_start(ap, nb_filter);
+    for(int i = 0; i < nb_filter; i++) {
+
+        rfilter[i].can_id = va_arg(ap, uint32_t);
+        rfilter[i].can_mask = CAN_SFF_MASK;
+    }
+    va_end(ap);
+
     setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 };
 

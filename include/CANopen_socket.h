@@ -10,6 +10,8 @@
 
 #include <memory>
 #include <string>
+#include <linux/can/raw.h>
+#include <sys/socket.h>
 
 #include "message.h"
 #include "payload.h"
@@ -43,6 +45,10 @@ public:
      */
     Socket(std::string ifname, uint32_t cob_id, int verbose_level = 0);
 
+  
+  
+  void add_filter(unsigned nb_filter... );
+  
     /*!
      *  \brief return true if the can interface is successfully bound
      */
