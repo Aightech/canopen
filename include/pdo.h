@@ -4,10 +4,13 @@
 #include "message.h"
 #include "sdo.h"
 
-namespace CANopen {
-class PDOMessage : public Message {
+namespace CANopen
+{
+class PDOMessage : public Message
+{
     public:
-    enum PDOFunctionCode : uint32_t {
+    enum PDOFunctionCode : uint32_t
+    {
         PDO1Transmit = Message::PDO1Transmit,
         PDO1Receive = Message::PDO1Receive,
         PDO2Transmit = Message::PDO2Transmit,
@@ -22,6 +25,8 @@ class PDOMessage : public Message {
     PDOMessage(const can_frame &other);
     PDOMessage(PDOFunctionCode fn, uint8_t node_id, Payload payload);
 
+    uint8_t
+    num();
 };
 } // namespace CANopen
 

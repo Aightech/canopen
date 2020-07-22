@@ -3,15 +3,19 @@
 
 #include "message.h"
 
-namespace CANopen {
-class SDOMessage : public Message {
-public:
-    enum RDWR {
+namespace CANopen
+{
+class SDOMessage : public Message
+{
+    public:
+    enum RDWR
+    {
         Read,
         Write
     };
 
-    enum CCS {
+    enum CCS
+    {
         SegmentDownload = 0,
         InitiateDownload = 1,
         InitiateUpload = 2,
@@ -22,33 +26,52 @@ public:
     };
 
     SDOMessage() = default;
-    SDOMessage(const can_frame& other);
-    SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, uint8_t e, uint8_t s, uint16_t index, uint8_t subindex, Payload payload);
+    SDOMessage(const can_frame &other);
+    SDOMessage(FunctionCode fn,
+               uint8_t node_id,
+               CCS spec,
+               uint8_t n,
+               uint8_t e,
+               uint8_t s,
+               uint16_t index,
+               uint8_t subindex,
+               Payload payload);
 
-    Payload payload();
+    uint16_t
+    index();
+
+    uint8_t
+    subindex();
+
+    Payload
+    payload();
 };
 
-class SDOInbound : public SDOMessage {
-public:
-    SDOInbound(const can_frame& other);
+class SDOInbound : public SDOMessage
+{
+    public:
+    SDOInbound(const can_frame &other);
 };
 
-class SDOOutbound : public SDOMessage {
-public:
+class SDOOutbound : public SDOMessage
+{
+    public:
     SDOOutbound(uint8_t node_id, RDWR dir, uint16_t index, uint8_t subindex, Payload payload);
 };
 
-class SDOOutboundRead : public SDOOutbound {
-public:
+class SDOOutboundRead : public SDOOutbound
+{
+    public:
     SDOOutboundRead(uint8_t node_id, uint16_t index, uint8_t subindex);
     SDOOutboundRead(uint8_t node_id, uint32_t index__sub);
 };
 
-class SDOOutboundWrite : public SDOOutbound {
-public:
-  SDOOutboundWrite(uint8_t node_id, uint16_t index, uint8_t subindex, Payload payload);
-  SDOOutboundWrite(uint8_t node_id, uint32_t index__sub, Payload payload);
+class SDOOutboundWrite : public SDOOutbound
+{
+    public:
+    SDOOutboundWrite(uint8_t node_id, uint16_t index, uint8_t subindex, Payload payload);
+    SDOOutboundWrite(uint8_t node_id, uint32_t index__sub, Payload payload);
 };
-}
+} // namespace CANopen
 
 #endif // _CANOPEN_SDO_MESSAGE_H_
