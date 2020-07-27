@@ -23,17 +23,20 @@ SDOMessage::SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, ui
         data[4 + i] = payload[i];
     }
 }
-  
+
 uint16_t
-SDOMessage::index()
-{
-  return data[1]+(data[2]<<8);
+SDOMessage::index() {
+    return data[1] + (data[2] << 8);
 }
-  
+
 uint8_t
-SDOMessage::subindex()
-{
-  return data[3];
+SDOMessage::subindex() {
+    return data[3];
+}
+
+uint32_t
+SDOMessage::index__sub() {
+    return ((data[1] + (data[2] << 8)) << 16) + data[3];
 }
 
 Payload

@@ -33,7 +33,8 @@ public:
 
     FunctionCode function_code();
     uint8_t node_id();
-    Payload payload();
+  virtual  Payload payload();
+  virtual uint32_t id(){return 0;};//return index__sub if sdomsg or pdo number if pdomsg
 
     std::string to_string();
 };

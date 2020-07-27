@@ -3,19 +3,15 @@
 
 #include "message.h"
 
-namespace CANopen
-{
-class SDOMessage : public Message
-{
+namespace CANopen {
+class SDOMessage : public Message {
     public:
-    enum RDWR
-    {
+    enum RDWR {
         Read,
         Write
     };
 
-    enum CCS
-    {
+    enum CCS {
         SegmentDownload = 0,
         InitiateDownload = 1,
         InitiateUpload = 2,
@@ -43,31 +39,35 @@ class SDOMessage : public Message
     uint8_t
     subindex();
 
+    uint32_t
+    index__sub();
+
+    uint32_t
+    id() {
+        return index__sub();
+    }
+
     Payload
     payload();
 };
 
-class SDOInbound : public SDOMessage
-{
+class SDOInbound : public SDOMessage {
     public:
     SDOInbound(const can_frame &other);
 };
 
-class SDOOutbound : public SDOMessage
-{
+class SDOOutbound : public SDOMessage {
     public:
     SDOOutbound(uint8_t node_id, RDWR dir, uint16_t index, uint8_t subindex, Payload payload);
 };
 
-class SDOOutboundRead : public SDOOutbound
-{
+class SDOOutboundRead : public SDOOutbound {
     public:
     SDOOutboundRead(uint8_t node_id, uint16_t index, uint8_t subindex);
     SDOOutboundRead(uint8_t node_id, uint32_t index__sub);
 };
 
-class SDOOutboundWrite : public SDOOutbound
-{
+class SDOOutboundWrite : public SDOOutbound {
     public:
     SDOOutboundWrite(uint8_t node_id, uint16_t index, uint8_t subindex, Payload payload);
     SDOOutboundWrite(uint8_t node_id, uint32_t index__sub, Payload payload);
