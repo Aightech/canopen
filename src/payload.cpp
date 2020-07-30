@@ -12,7 +12,7 @@ Payload::operator std::string() const
 {
     std::stringstream ss;
     ss << "[" << std::hex << std::setfill('0') << std::uppercase;
-    for (auto it = begin(); it < end(); ++it) {
+    for (auto it = this->begin(); it < this->end(); ++it) {
       ss << std::setw(2) << (int)*it << ' ';
     }
     ss << ((size()==0)?"]":"\b]");

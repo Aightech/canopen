@@ -1,6 +1,7 @@
 #include "sdo.h"
 
 #include <stdexcept>
+#include <iostream>
 
 namespace CANopen {
 SDOMessage::SDOMessage(const can_frame &other)
@@ -14,7 +15,7 @@ SDOMessage::SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, ui
 
     can_id = fn + node_id;
     can_dlc = CAN_MAX_DLC;
-    data[0] = static_cast<uint8_t>(spec << 5 | n << 2 | e << 1 | s);
+    data[0] = static_cast<uint8_t>(spec << 5 | (n&0x03) << 2 | e << 1 | s);
     data[1] = static_cast<uint8_t>(index);
     data[2] = static_cast<uint8_t>(index >> 8);
     data[3] = subindex;
@@ -25,24 +26,30 @@ SDOMessage::SDOMessage(FunctionCode fn, uint8_t node_id, CCS spec, uint8_t n, ui
 }
 
 uint16_t
-SDOMessage::index() {
+SDOMessage::index() const{
     return data[1] + (data[2] << 8);
 }
 
 uint8_t
-SDOMessage::subindex() {
+SDOMessage::subindex() const{
     return data[3];
 }
 
 uint32_t
-SDOMessage::index__sub() {
+SDOMessage::index__sub() const{
     return ((data[1] + (data[2] << 8)) << 16) + data[3];
 }
 
 Payload
-SDOMessage::payload() {
-    return Payload(std::vector<uint8_t>(data + 4, data + CAN_MAX_DLC - 4));
+SDOMessage::payload() const{
+    return Payload(std::vector<uint8_t>(data + 4, data + 4 + size_data()));
 }
+
+uint8_t 
+SDOMessage::size_data() const
+{
+ return 4-(0x3&(data[0]>>2));
+};
 
 SDOInbound::SDOInbound(const can_frame &other)
     : SDOMessage(other) {

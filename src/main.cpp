@@ -33,8 +33,8 @@ main(int argc, char **argv) {
         CANopen::Socket can(ifname, true);
         if(argc == 5) {
             can.send(CANopen::SDOOutboundRead(node, index, subindex));
-
-            std::cout << "value: " << can.receive()->payload().value<uint32_t>() << std::endl;
+            CANopen::Payload p= can.receive()->payload();
+	    std::cout << "Reply: " << p << " -> " << p.value<uint32_t>() << std::endl;
 
         } else {
             uint8_t s = (uint8_t)strtol(argv[i++], NULL, 10); // size of the data to send

@@ -30,13 +30,15 @@ public:
     Message() = default;
     Message(const can_frame& other);
     Message(uint32_t cob_id, Payload payload);
+    
+    operator can_frame*() const { return const_cast<can_frame*>(reinterpret_cast<const can_frame*>(&can_id));}; 
 
-    FunctionCode function_code();
-    uint8_t node_id();
-  virtual  Payload payload();
-  virtual uint32_t id(){return 0;};//return index__sub if sdomsg or pdo number if pdomsg
+    FunctionCode function_code() const;
+    uint8_t node_id() const;
+    virtual  Payload payload() const;
+    virtual uint32_t id() const {return 0;};//return index__sub if sdomsg or pdo number if pdomsg
 
-    std::string to_string();
+    std::string to_string() const;
 };
 }
 

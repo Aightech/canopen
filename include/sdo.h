@@ -34,21 +34,24 @@ class SDOMessage : public Message {
                Payload payload);
 
     uint16_t
-    index();
+    index() const;
 
     uint8_t
-    subindex();
+    subindex() const;
 
     uint32_t
-    index__sub();
+    index__sub() const;
 
     uint32_t
-    id() {
+    id() const{
         return index__sub();
     }
+    
+    uint8_t 
+    size_data() const;
 
     Payload
-    payload();
+    payload() const;
 };
 
 class SDOInbound : public SDOMessage {

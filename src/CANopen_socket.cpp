@@ -22,10 +22,10 @@ Socket::Socket(std::string ifname, int verbose_level)
         throw std::runtime_error(std::string("Failed to bind socket: ") + strerror(-r));
     }
 
-    struct timeval tv;
-    tv.tv_sec = 1;
-    tv.tv_usec = 0;
-    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
+//    struct timeval tv;
+//    tv.tv_sec = 1;
+//    tv.tv_usec = 0;
+//    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
 }
 
 Socket::Socket(std::string ifname, uint32_t cob_id, int verbose_level)
@@ -73,7 +73,7 @@ Socket::bind() {
 
 void
 Socket::send(const Message &&msg) {
-    int32_t n = write(m_socket, &msg, sizeof(struct can_frame));
+    int32_t n = write(m_socket, msg, sizeof(struct can_frame));
     if(n < static_cast<ssize_t>(sizeof(struct can_frame))) {
         throw std::runtime_error("Failed to send message (n=" + std::to_string(n) + ")");
     }
@@ -82,7 +82,8 @@ Socket::send(const Message &&msg) {
 std::shared_ptr<Message>
 Socket::receive() {
     Message ans;
-    int32_t n = read(m_socket, &ans, sizeof(struct can_frame));
+    int32_t n = read(m_socket, ans, sizeof(struct can_frame));
+	
 
     if(n < 0) {
         IF_VERBOSE(1, std::cout << "CANopen::Socket::receive: nothing to read" << std::endl)
