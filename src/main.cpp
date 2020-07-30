@@ -22,6 +22,15 @@ struct sss {
 int
 main(int argc, char **argv) {
     printf("#### CANopen SDO sender ####\n");
+    if(argc == 2)
+    {
+    	char *ifname = argv[1];
+        printf("Opening CAN socket on inteface : ");
+        CANopen::Socket can(ifname, true);
+        std::cout << "Reply: "; 
+        can.send(CANopen::NMTMessage(CANopen::NMTMessage::GoToOperational,0));
+        return 0;
+    }
     if(argc == 5 || argc == 8) {
         uint8_t i = 1;
         char *ifname = argv[i++];
