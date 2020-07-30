@@ -38,16 +38,16 @@ Socket::Socket(std::string ifname, uint32_t cob_id, int verbose_level)
 };
 
 void
-Socket::add_filter(unsigned nb_filter...) {
-    struct can_filter rfilter[nb_filter];
-    va_list ap;
-    va_start(ap, nb_filter);
-    for(int i = 0; i < nb_filter; i++) {
-
-        rfilter[i].can_id = va_arg(ap, uint32_t);
-        rfilter[i].can_mask = CAN_SFF_MASK;
+Socket::add_filter(std::initializer_list<struct can_filter> rfilter_) {
+    struct can_filter rfilter[rfilter_.size()];
+    int i=0;
+    for(auto filter :rfilter_)
+    {
+    	std::cout << filter.can_id << " " << filter.can_mask << "\n";
+        rfilter[i].can_id = filter.can_id;
+        rfilter[i++].can_mask = filter.can_mask;//CAN_SFF_MASK;
     }
-    va_end(ap);
+	
 
     setsockopt(m_socket, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 };

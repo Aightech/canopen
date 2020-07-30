@@ -12,6 +12,7 @@
 #include <string>
 #include <linux/can/raw.h>
 #include <sys/socket.h>
+#include <initializer_list>
 
 #include "message.h"
 #include "payload.h"
@@ -47,7 +48,7 @@ public:
 
   
   
-  void add_filter(unsigned nb_filter... );
+  void add_filter(std::initializer_list<struct can_filter> rfilter);
   
     /*!
      *  \brief return true if the can interface is successfully bound
