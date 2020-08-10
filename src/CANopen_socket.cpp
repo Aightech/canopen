@@ -43,7 +43,6 @@ Socket::add_filter(std::initializer_list<struct can_filter> rfilter_) {
     int i=0;
     for(auto filter :rfilter_)
     {
-    	std::cout << filter.can_id << " " << filter.can_mask << "\n";
         rfilter[i].can_id = filter.can_id;
         rfilter[i++].can_mask = filter.can_mask;//CAN_SFF_MASK;
     }

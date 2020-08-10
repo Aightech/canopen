@@ -32,13 +32,13 @@ class Payload : public std::vector<uint8_t> {
             ret.push_back(value >> (8 * i));
         }
         return ret;
-    }
+    };
 
     template <typename T1, typename... Ts>
     static Payload
     from_data(const T1 &value, const Ts &&... others) {
         return from_data(others...).push_back(from_data(value));
-    }
+    };
 
     template <typename T>
     T &
@@ -46,7 +46,7 @@ class Payload : public std::vector<uint8_t> {
         if(empty())
             throw std::runtime_error(std::string("Empty payload."));
         return *(T *)(data() + begin);
-    }
+    };
 
     template <typename T>
     Payload &
@@ -54,7 +54,14 @@ class Payload : public std::vector<uint8_t> {
         for(int i = 0; i < sizeof(T); i++)
             push_back(*((uint8_t *)(&value) + i));
         return *this;
-    }
+    };
+    
+    Payload &
+    operator<<(Payload &&p) {
+        for(int i = 0; i < p.size(); i++)
+            push_back(*((uint8_t *)(&p[i])));
+        return *this;
+    };
 
     operator std::string() const;
 };

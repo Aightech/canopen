@@ -35,6 +35,21 @@ class SDOMessage : public Message {
 
     uint16_t
     index() const;
+    
+    bool is_confirmation()
+    {
+    	if(data[0]==0x60)
+    		return true;
+    	else
+    		return false;
+    };
+    bool is_error()
+    {
+    	if(data[0]==0x80)
+    		return true;
+    	else
+    		return false;
+    };
 
     uint8_t
     subindex() const;
