@@ -12,6 +12,7 @@
 #include <string>
 #include <linux/can/raw.h>
 #include <sys/socket.h>
+#include <mutex>
 #include <initializer_list>
 
 #include "message.h"
@@ -20,12 +21,17 @@
 #include "pdo.h"
 #include "nmt.h"
 
-#define IF_VERBOSE(lvl, cmd)      \
-    if (m_verbose_level >= lvl) { \
+
+#define IF_VERBOSE(lvl, cmd, m_lvl)      \
+    if (m_lvl >= lvl) { \
+        g_verbose_mutex.lock(); \
         cmd;                      \
+        g_verbose_mutex.unlock(); \
     }
 
+
 namespace CANopen {
+extern std::mutex g_verbose_mutex;
 /*! \class Socket
  * \brief Canopen object able to send command through a CAN interface using UNIX sockets.
  */

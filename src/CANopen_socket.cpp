@@ -11,7 +11,11 @@
 #include <unistd.h>
 #include <stdarg.h>
 
+
+
 namespace CANopen {
+std::mutex g_verbose_mutex;
+
 Socket::Socket(std::string ifname, int verbose_level)
     : m_ifname(ifname), m_verbose_level(verbose_level) {
     if((m_socket = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
@@ -62,7 +66,7 @@ Socket::bind() {
         addr.can_family = AF_CAN;
         addr.can_ifindex = ifr.ifr_ifindex;
 
-        IF_VERBOSE(1, std::cout << m_ifname << " at index " << ifr.ifr_ifindex << std::endl)
+        IF_VERBOSE(1, std::cout << m_ifname << " at index " << ifr.ifr_ifindex << std::endl, m_verbose_level)
 
         if(::bind(m_socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
             return -errno;
@@ -85,10 +89,10 @@ Socket::receive() {
 	
 
     if(n < 0) {
-        IF_VERBOSE(1, std::cout << "CANopen::Socket::receive: nothing to read" << std::endl)
+        IF_VERBOSE(1, std::cout << "CANopen::Socket::receive: nothing to read" << std::endl, m_verbose_level)
         return std::shared_ptr<Message>();
     } else if(n < static_cast<ssize_t>(sizeof(struct can_frame))) {
-        IF_VERBOSE(1, std::cerr << "CANopen::Socket::receive: incomplete CAN frame" << std::endl)
+        IF_VERBOSE(1, std::cerr << "CANopen::Socket::receive: incomplete CAN frame" << std::endl, m_verbose_level)
         return std::shared_ptr<Message>();
     }
 

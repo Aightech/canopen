@@ -62,6 +62,20 @@ class Payload : public std::vector<uint8_t> {
             push_back(*((uint8_t *)(&p[i])));
         return *this;
     };
+    
+    Payload &
+    store_at(Payload &&p, int slot) {
+    	for(int i = this->size(); i < slot ; i++)
+    		this->push_back(0);
+        for(int i = slot; i < slot + p.size(); i++)
+        {
+        	if(i < this->size())
+        		(*this)[i]=*((uint8_t *)(&p[i]));
+        	else
+            		this->push_back(*((uint8_t *)(&p[i-slot])));
+         }
+        return *this;
+    };
 
     operator std::string() const;
 };
