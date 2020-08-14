@@ -104,7 +104,7 @@ Socket::receive() {
     case Message::Emergency:
         if(ans.node_id() == 0) { // Sync frame
         } else {                 // Emergency frame
-            ret = std::make_shared<Message>(ans);
+            ret = std::make_shared<EMCYMessage>(ans);
         }
         break;
     case Message::TimeStamp:

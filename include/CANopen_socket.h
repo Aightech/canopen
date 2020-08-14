@@ -20,13 +20,14 @@
 #include "sdo.h"
 #include "pdo.h"
 #include "nmt.h"
+#include "emcy.h"
 
 
 #define IF_VERBOSE(lvl, cmd, m_lvl)      \
     if (m_lvl >= lvl) { \
-        g_verbose_mutex.lock(); \
+        CANopen::g_verbose_mutex.lock(); \
         cmd;                      \
-        g_verbose_mutex.unlock(); \
+        CANopen::g_verbose_mutex.unlock(); \
     }
 
 
