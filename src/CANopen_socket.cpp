@@ -25,11 +25,6 @@ Socket::Socket(std::string ifname, int verbose_level)
     if((r = bind()) < 0) {
         throw std::runtime_error(std::string("Failed to bind socket: ") + strerror(-r));
     }
-
-//    struct timeval tv;
-//    tv.tv_sec = 1;
-//    tv.tv_usec = 0;
-//    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
 }
 
 Socket::Socket(std::string ifname, uint32_t cob_id, int verbose_level)

@@ -3,8 +3,8 @@
 
 /*!
  * \file canopen_socket.h
- * \brief Canopen object able to send command through a CAN interface using the UNIX socket.
- * \author Alexis Devillard
+ * \brief Canopen socket able to send/receive messages through a CAN interface using the UNIX socket.
+ * \author Florian Richer & Alexis Devillard
  * \version 1.0
  */
 
@@ -34,7 +34,7 @@
 namespace CANopen {
 extern std::mutex g_verbose_mutex;
 /*! \class Socket
- * \brief Canopen object able to send command through a CAN interface using UNIX sockets.
+ * \brief CANopen object able to send Message through a CAN interface using UNIX sockets.
  */
 class Socket {
 public:

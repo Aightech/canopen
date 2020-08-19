@@ -1,6 +1,13 @@
 #ifndef _CANOPEN_PAYLOAD_H_
 #define _CANOPEN_PAYLOAD_H_
 
+/*!
+ * \file payload.h
+ * \brief  Payload of CANopen message: array of 1 to 8 bytes of data.
+ * \author Florian Richer & Alexis Devillard
+ * \version 1.0
+ */
+
 #include <cstdint>
 #include <sstream>
 #include <stdexcept>
@@ -9,6 +16,9 @@
 
 
 namespace CANopen {
+/*!
+ * \brief Payload of CANopen message: array of 1 to 8 bytes of data
+ */
 class Payload : public std::vector<uint8_t> {
     public:
     Payload() = default;
@@ -16,6 +26,10 @@ class Payload : public std::vector<uint8_t> {
     Payload(const std::vector<uint8_t> &other);
 
     template <typename T>
+    /*!
+     * \brief Payload Constructor from a standard data type variable. It transfrom the n bytes of the data into a array of n bytes.
+     * \param value The variable to store in the payload
+     */
     Payload(T value) {
         for(int i = 0; i < sizeof(T); i++)
             push_back(*((uint8_t *)(&value) + i));
@@ -25,22 +39,11 @@ class Payload : public std::vector<uint8_t> {
     operator=(const Payload &) = default;
 
     template <typename T>
-    static Payload
-    from_data(const T &value) {
-        Payload ret;
-        for(int i = 0; i < sizeof(T); ++i) {
-            ret.push_back(value >> (8 * i));
-        }
-        return ret;
-    };
-
-    template <typename T1, typename... Ts>
-    static Payload
-    from_data(const T1 &value, const Ts &&... others) {
-        return from_data(others...).push_back(from_data(value));
-    };
-
-    template <typename T>
+    /*!
+     * \brief value Returns the data casted  as a variable of type T
+     * \param begin The index of the data array from where the data must be returned.
+     * \return The data as a variable of type T.
+     */
     T &
     value(unsigned begin = 0) {
         if(empty())
@@ -48,7 +51,13 @@ class Payload : public std::vector<uint8_t> {
         return *(T *)(data() + begin);
     };
 
+
     template <typename T>
+    /*!
+     * \brief operator << Adds a variable inside the payload
+     * \param value The variable to store
+     * \return The Payload reference.
+     */
     Payload &
     operator<<(T &&value) {
         for(int i = 0; i < sizeof(T); i++)
@@ -56,6 +65,11 @@ class Payload : public std::vector<uint8_t> {
         return *this;
     };
     
+    /*!
+     * \brief operator << Adds a variable inside the payload
+     * \param p The variable to store
+     * \return The Payload reference.
+     */
     Payload &
     operator<<(Payload &&p) {
         for(int i = 0; i < p.size(); i++)
@@ -63,6 +77,12 @@ class Payload : public std::vector<uint8_t> {
         return *this;
     };
     
+    /*!
+     * \brief store_at Stores a variable at a specified index in the data array.
+     * \param p The variable to store.
+     * \param slot The index in data array where the variable has to be store to.
+     * \return
+     */
     Payload &
     store_at(Payload &&p, int slot) {
     	for(int i = this->size(); i < slot ; i++)

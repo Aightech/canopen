@@ -1,9 +1,19 @@
 #ifndef _CANOPEN_NMT_MESSAGE_H_
 #define _CANOPEN_NMT_MESSAGE_H_
 
+/*!
+ * \file nmt.h
+ * \brief  NMT message sent and received throught CANopen socket.
+ * \author Florian Richer & Alexis Devillard
+ * \version 1.0
+ */
+
 #include "message.h"
 
 namespace CANopen {
+/*!
+ * \brief NMT Message (Network management)
+ */
 class NMTMessage : public Message {
     public:
     enum Code : uint8_t {

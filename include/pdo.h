@@ -1,10 +1,20 @@
 #ifndef _CANOPEN_PDO_MESSAGE_H_
 #define _CANOPEN_PDO_MESSAGE_H_
 
+/*!
+ * \file sdo.h
+ * \brief  PDO message sent and received throught CANopen socket.
+ * \author Florian Richer & Alexis Devillard
+ * \version 1.0
+ */
+
 #include "message.h"
 #include "sdo.h"
 
 namespace CANopen {
+/*!
+ * \brief PDO Message (Process Data Object)
+ */
 class PDOMessage : public Message {
     public:
     enum PDOFunctionCode : uint32_t {
