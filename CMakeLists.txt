@@ -31,7 +31,7 @@ cmake_minimum_required(VERSION 3.0)
 
 ###### PROJECT NAME AND VERSION ######
 set(EXEC_NAME canopen)
-set(PROJECT_VERSION 76-faa7868)
+set(PROJECT_VERSION 5.11)
 project(${EXEC_NAME} VERSION ${PROJECT_VERSION})
 
 ###### LIBRARY NAME ######
